@@ -1,12 +1,12 @@
 package br.com.JonasSmendes.plataforma_curso.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -18,17 +18,20 @@ public class Course {
     @GeneratedValue
     private UUID id;
     private String titulo;
+
     private String description;
-    private String category;
-    private LocalDateTime createdAt;
+
+    private String slug;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("order ASC")
+    private List<Video> videos = new ArrayList<>();
 
     public Course(){}
 
-    public Course(UUID id, String titulo, String description, String category, LocalDateTime createdAt) {
-        this.id = id;
+    public Course( String titulo, String description, String slug) {
         this.titulo = titulo;
         this.description = description;
-        this.category = category;
-        this.createdAt = createdAt;
+        this.slug = slug;
     }
 }

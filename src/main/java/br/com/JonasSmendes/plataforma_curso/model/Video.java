@@ -16,27 +16,25 @@ public class Video {
     @GeneratedValue
     private UUID id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     private Course course;
 
     private String title;
 
-    private String url;
+    private String slug;
+
+    private String gumletAssetId;
 
     @Column(name = "order_index")
     private int order;
 
-    private int durationSecond;
-
     public Video(){}
 
-    public Video(UUID id, Course course, String title, String url, int order, int durationSecond) {
-        this.id = id;
-        this.course = course;
+    public Video(String title, int order, String gumletAssetId, String slug) {
+        this.slug = slug;
+        this.gumletAssetId = gumletAssetId;
         this.title = title;
-        this.url = url;
         this.order = order;
-        this.durationSecond = durationSecond;
     }
 }
